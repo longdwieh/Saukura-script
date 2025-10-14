@@ -3543,61 +3543,29 @@ local function v90(v385)
 end
 spawn(function()
 	while wait() do
-		if AutoFarmChest then
-			local v1652 = v89();
-			v90(v1652);
-			for v1740, v1741 in ipairs(v1652) do
-				if ((v1741.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= (5000 + _G.MagnitudeAdd)) then
-					repeat
-						wait();
-						if game:GetService("Workspace"):FindFirstChild(v1741.Name) then
-							topos(v1741.CFrame);
-						end
-					until (AutoFarmChest == false) or  not v1741.Parent
-					topos(game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame);
-					_G.MagnitudeAdd = _G.MagnitudeAdd + 1500 ;
-					break;
-				end
-			end
-		end
-	end
-end);
-v68:Toggle("Auto Stop Items", function(v386)
-	_G.StopItemsChest = v386;
+		local v55 = v16.Main:AddToggle("ToggleCollectChest", {
+    Title = "Auto Farm Chest",
+    Description = "",
+    Default = false
+});
+v55:OnChanged(function(v248)
+    _G.AutoCollectChest = v248;
 end);
 spawn(function()
-	while wait() do
-		pcall(function()
-			if _G.StopItemsChest then
-				if (game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("God's Chalice") or game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Fist of Darkness")) then
-					_G.ChestBypass = false;
-					topos(game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame);
-				end
-			end
-		end);
-	end
-end);
-v68:Toggle("Auto Farm Chest Mirage island", false, function(v387)
-	_G.ChestMirage = v387;
-	StopTween(_G.ChestMirage);
-end);
-_G.MagnitudeAdd = 0;
-spawn(function()
-	while wait() do
-		if _G.ChestMirage then
-			for v1742, v1743 in pairs(game:GetService("Workspace"):GetChildren()) do
-				if v1743.Name:find("FragChest") then
-					if game:GetService("Workspace"):FindFirstChild(v1743.Name) then
-						if ((v1743.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= (5000 + _G.MagnitudeAdd)) then
-							repeat
-								wait();
-								if game:GetService("Workspace"):FindFirstChild(v1743.Name) then
-									topos(v1743.CFrame);
-								end
-							until (_G.ChestMirage == false) or  not v1743.Parent
-							TP(game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame);
-							_G.MagnitudeAdd = _G.MagnitudeAdd + 1500 ;
-							break;
+    while wait() do
+        if _G.AutoCollectChest then
+            local v673 = game:GetService("Players");
+            local v674 = v673.LocalPlayer;
+            local v675 = v674.Character or v674.CharacterAdded:Wait() ;
+            local v676 = v675:GetPivot().Position;
+            local v677 = game:GetService("CollectionService");
+            local v678 = v677:GetTagged("_ChestTagged");
+            local v679, v680 = math.huge;
+            for v765 = 1, # v678 do
+                local v766 = v678[v765];
+                local v767 = (v766:GetPivot().Position - v676).Magnitude;
+                if (not v766:GetAttribute("IsDisabled") and (v767 < v679)) then
+                    v679, v680 = v767, v766;
 						end
 					end
 				end
@@ -12265,6 +12233,7 @@ function FastAttackConnectorFunction()
 end
 
 return FastAttackConnectorFunction();
+
 
 
 
