@@ -12061,15 +12061,15 @@ local Xeter = {
     ["Near Full Moon"] = "https://discord.com/api/webhooks/1427825135754285098/nFAeM6lAJEGDT9zeDBdXfHdNhzUOELplKhHrE5zaTBSdrB4OTt55ZrDGLQxgqfw37ze6"
     ["Rip Indra"] = "https://discord.com/api/webhooks/1427825138589499503/CBmAcsOMqKW4IJRdaHMzIysc75mK3xCnh-bOdIs1kFI999zmisuHBQU_LYy0y8Scw-JB"
     ["Dough King"] = "https://discord.com/api/webhooks/1427825132843569152/b1F6HS17VQjOYsVwuP3Q3GMGF7HSY9v3YCi4Ppc-ko9ABZHw9ylLN9l5qi7TuOTOD2YT"
-    ["Cake Prince"] = "UrlWebhook"
-    ["Tyrant of the Skies"] = "UrlWebhook"
-    ["Darkbeard"] = "UrlWebhook"
-    ["Soul Reaper"] = "UrlWebhook"
-    ["Cursed Captain"] = "UrlWebhook"
-    ["Legendary Sword"] = "UrlWebhook"
-    ["Berry Spawn"] = "UrlWebhook"
-    ["Fruit Spawn"] = "UrlWebhook"
-    ["Low Player"] = UrlWebhook
+    ["Cake Prince"] = "https://discord.com/api/webhooks/1427862022342705222/p5mP4vgR-E3LcOBqVvtxsNvPDhVgqFEZkk--HvCGsEdVkPoHhmimB54Ln_Pin20hCIgH"
+    ["Tyrant of the Skies"] = "https://discord.com/api/webhooks/1427825131199135857/triNnnpzRSfObGXAzMayQNkdujOPxM4dHvKUIJLnG2l_z_vsAnSFZoYvt4rzzz0HDZgB"
+    ["Darkbeard"] = "https://discord.com/api/webhooks/1427861995226664970/0_ySGCSwDuL9vlraEfIdQC6CQ7vcutL28ZfeZWCDCqmlLCwbspbGqvJ2ZqYRr7UaPAJS"
+    ["Soul Reaper"] = "https://discord.com/api/webhooks/1427825134978203769/Hf9gnpv5YQhKHAec7Ru-y5t9zW9wZDYXlbFxaQ3frPqkGrGak_uIhjprlXhew1T0CzFy"
+    ["Cursed Captain"] = "https://discord.com/api/webhooks/1427825139235684514/jTdugfGDexjR5STQbFKlAHprTCYew4Grmrm8PVH1QZfdotJbVNjMFNDqM4buK6GAweR5"
+    ["Legendary Sword"] = "https://discord.com/api/webhooks/1427825134227427359/91NyHRAKRUzgES18311NQF72g54B3JqzsN-RjRuabjzFHJTCBUH-XMlDo7TwMMNA6uKN"
+    ["Berry Spawn"] = "https://discord.com/api/webhooks/1427825139990663228/vrFH3wjOSwHmpV66vdL5QRjKRA3tCMAulFD4buFbw6nwjCC5zcJYlirVNfeRS5wIwnj4"
+    ["Fruit Spawn"] = "https://discord.com/api/webhooks/1427825137519956071/3WA45TgUAzn7hZAUoBzjQtXnSRI4GJV9ZV19-_IZv5JWFVQgGGSVSGXXHIu-LCkaNb7d"
+    ["Low Player"] = https://discord.com/api/webhooks/1427825136471642212/h-VajOrA9WcdjCLQKde9cu1zMRrs3E7kkD49lAltsTvLR11yxYcQsH0_yoIOWULWDJqd
 }
 
 local Son = { -- Cái Này Test
@@ -12202,7 +12202,7 @@ function sendFruitWebhook(fruitName)
                 { name = "ðŸ“œ Join Script (Mobile Copy):", value = joinScript, inline = false }
             },
             footer = {
-                text = "Make by Xeter â€¢ " .. os.date("Time : %d/%m/%Y - %H:%M:%S")
+                text = "Make by real_nanatv â€¢ " .. os.date("Time : %d/%m/%Y - %H:%M:%S")
             }
         }}
     }
@@ -12614,3 +12614,4 @@ task.spawn(function()
     end
 
 end)
+
