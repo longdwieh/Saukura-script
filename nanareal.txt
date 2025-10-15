@@ -12054,13 +12054,13 @@ local joinScript = string.format(
 
 --// Webhook Configuration
 local Xeter = {
-    ["Mirage Island"] = "UrlWebhook"
-    ["Kitsune Island"] = "UrlWebhook"
-    ["Prehistoric Island"] = "UrlWebhook"
-    ["Full Moon"] = "UrlWebhook"
-    ["Near Full Moon"] = "UrlWebhook"
-    ["Rip Indra"] = "UrlWebhook"
-    ["Dough King"] = "UrlWebhook"
+    ["Mirage Island"] = "https://discord.com/api/webhooks/1427825123498397707/8TLFhPjO3FM-V0yEScvo7iGDbbeo0cG6gPbHMhbxI8sNkZla_RWMYVG6_gyqRnZaCqa2"
+    ["Kitsune Island"] = "https://discord.com/api/webhooks/1427825137297653770/p6bFGefb5FFEVOWxZHVk6b_ZRcpfgBUjwPNiTNgHUeL1zcUlII-F-iZZnd003NbHSOIg"
+    ["Prehistoric Island"] = "https://discord.com/api/webhooks/1427825133824774225/TpfxNx5pf6FV-fiZCj4kh5zfgEp7K822KeO9ccju_9lalu48egALZpPQ50otLvqNXWOM"
+    ["Full Moon"] = "https://discord.com/api/webhooks/1427825127227396118/hbQb10Xaipe3ZEEKTHxrb9R1INDuzTIZaRWHqfwDxsIWZguDpV7Oib9wxsDN7kB7jWn4"
+    ["Near Full Moon"] = "https://discord.com/api/webhooks/1427825135754285098/nFAeM6lAJEGDT9zeDBdXfHdNhzUOELplKhHrE5zaTBSdrB4OTt55ZrDGLQxgqfw37ze6"
+    ["Rip Indra"] = "https://discord.com/api/webhooks/1427825138589499503/CBmAcsOMqKW4IJRdaHMzIysc75mK3xCnh-bOdIs1kFI999zmisuHBQU_LYy0y8Scw-JB"
+    ["Dough King"] = "https://discord.com/api/webhooks/1427825132843569152/b1F6HS17VQjOYsVwuP3Q3GMGF7HSY9v3YCi4Ppc-ko9ABZHw9ylLN9l5qi7TuOTOD2YT"
     ["Cake Prince"] = "UrlWebhook"
     ["Tyrant of the Skies"] = "UrlWebhook"
     ["Darkbeard"] = "UrlWebhook"
@@ -12612,4 +12612,5 @@ task.spawn(function()
             task.wait(5) -- Longer wait when not in correct world
         end
     end
+
 end)
