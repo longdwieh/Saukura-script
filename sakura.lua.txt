@@ -12046,7 +12046,7 @@ game:GetService("StarterGui"):SetCore(
     {
         Title = "Sakura hub",
         Text = "Đã Tải Xong",
-        Icon = "rbxassetid://112528931029640",
+        Icon = "rbxassetid://116231965107271",
         Duration = 5
     }
 )
