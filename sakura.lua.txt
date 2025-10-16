@@ -12093,23 +12093,23 @@ local joinScript = string.format(
 
 --// Webhook Configuration
 local Dora = {
-    ["Mirage Island"] = "",
-    ["Kitsune Island"] = "",
-    ["Prehistoric Island"] = "",
-    ["Full Moon"] = "",
-    ["Near Full Moon"] = "",
-    ["Rip Indra"] = "",
-    ["Dough King"] = "",
-    ["Cake Prince"] = "",
-    ["Tyrant of the Skies"] = "",
-    ["Darkbeard"] = "",
-    ["Soul Reaper"] = "",
-    ["Cursed Captain"] = "",
-    ["Legendary Sword"] = "",
-    ["Berries"] = "",
-    ["Fruit"] = "",
-    ["Low Player"] = "",
-    ["Elite Hunter"] = ""
+    ["Mirage Island"] = "https://discord.com/api/webhooks/1420270311374458971/QWVEb0euPFe6nP0gd73PPuxf_5G7T2YKMd4zRgREelZ6E61GZ-fR8BUjYY2W4bBoGSUJ",
+    ["Kitsune Island"] = "https://discord.com/api/webhooks/1420270316420206762/etjYsP7dXQzClB-3JD4dfIQ0PZY2Y0dgnnjzC3hnfB4m_XAIFo2xw_W_PomZQVjmqX0w",
+    ["Prehistoric Island"] = "https://discord.com/api/webhooks/1420270314863988866/eNceD4LLD804P6NAKUduEaMDWoMi2tjEM21X2Bx3Wta5nWzoG-n44pkdYnIrdGLA2v9l",
+    ["Full Moon"] = "https://discord.com/api/webhooks/1420270312897122446/KkuaGTyBjejr9ic-KbnSuhbnZoV4RmoJUpia6JekL4b7BIMxJLxJ8kj1EUfLzXnQjzRK",
+    ["Near Full Moon"] = "https://discord.com/api/webhooks/1420270315078029462/fNJ_eGTWc1QxIQ57HdJxaNdNVE_QIrXT6cAb1EY6ju7vZiVH4lEAq6iGMKPrPO6L2XYf",
+    ["Rip Indra"] = "https://discord.com/api/webhooks/1420270315682140201/qq4khMTIHd7XrKkKs8lycQ-VR_T1ykDIZ1IGivD5mq5JY21t7_ICUsmEbfLQd3RJQs44",
+    ["Dough King"] = "https://discord.com/api/webhooks/1428390834000232602/IzTRR8Z2vRrStFHe7UeZxQUKiMVKuDK4zdFKwdoLaHzuNnY4QFmOkdTg1YSKc3LTF3uP",
+    ["Cake Prince"] = "https://discord.com/api/webhooks/1428390835841531936/g8HlZyfp6om4Gdis8EMTGgtEAzoZ9CUB3RSof9XXTmTQtJcTEa06dyTpGEMPpMbIqBr8",
+    ["Tyrant of the Skies"] = "https://discord.com/api/webhooks/1428390844670414850/3x3BJmoBPwigFSryts0d5-CK5xrkSyWXEjTeixZmJuO46aoEeM7exjR7NcPQvLHVnPCR",
+    ["Darkbeard"] = "https://discord.com/api/webhooks/1428390845459071037/OTfuqnxwnkq6O-hpiy-WTLuyNA2oTCfxfmdrhg5Zwa8Yz9UwHV1JawtBxc_dQgHTvUs5",
+    ["Soul Reaper"] = "https://discord.com/api/webhooks/1428390844834250946/TwqX-mMktC_qBhqmvO-D7koGWfFixYlNIQ41rXOQfOzEgLcROeksY3IQWsYicQWNqqnU",
+    ["Cursed Captain"] = "https://discord.com/api/webhooks/1428390846595858602/Kad0q6OQDCe29pF1pkjKeW-NpQ_prJ0V5_kv-J4HClJ1OIyBd35IEwfXPxeOUsfZsn6N",
+    ["Legendary Sword"] = "https://discord.com/api/webhooks/1420270312385151007/yu8hxvGQNmhFpTCe46POrpWdZDrxQhPmDYWDEwjeYCE1R_BQiIfYwOnnT7ofPfgmPH_b",
+    ["Berries"] = "https://discord.com/api/webhooks/1428390843244609740/Z60ZAoSsB8gKPq1FjPrmhsxXJdzSRDTGYa-XsNsXRdwxn0eTJYidMz6ymLAo2CFE6lMz",
+    ["Fruit"] = "https://discord.com/api/webhooks/1428390842342576209/FWqpHQ-aFfmcGF4iCvpVb5Xp1xF1u4IkMV69Mq4K6A3Oe9HAgRvREDoqcESDaNLAut5v",
+    ["Low Player"] = "https://discord.com/api/webhooks/1428390841549979800/ZEk5PFk_1zYkGwlyELqGtSb-MPyrlQ82kVyGmffTSkeitf-Wb6C1ml5ip6wLT9cC9k0R",
+    ["Elite Hunter"] = "https://discord.com/api/webhooks/1420270317602865172/1Gbt-1ecFDK_QNCl7c8OiC5HDVp4CkbtUGoLWjsARkG2Kwy2xinXKyhwQHCLnYuYOevG"
 }
 
 local Son = {
@@ -12206,14 +12206,14 @@ function sendWebhook(eventName, extraData)
 
     local data = {
         content = "",
-        username = "rùa gay",
+        username = "đệ anh long",
         avatar_url = "https://media.discordapp.net/attachments/1383013770158149672/1385570727335297025/image.png?ex=6857358c&is=6855e40c&hm=cf42c46df56bd84fcb1fc3f7d6a296e9a33de3922ab7baf0c1472c9c9b985cd7&=&format=webp&quality=lossless&width=940&height=940",
         embeds = {{
             title = embedTitle,
             color = embedColor,
             fields = fields,
             footer = {
-                text = "Make by Xeter • " .. os.date("Time : %d/%m/%Y - %H:%M:%S"),
+                text = "Make by longdeptrai_." .. os.date("Time : %d/%m/%Y - %H:%M:%S"),
                 icon_url = ""
             }
         }}
