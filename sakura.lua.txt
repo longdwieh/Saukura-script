@@ -135,19 +135,19 @@ local plr = game:GetService("Players").LocalPlayer
 local Notification = require(game:GetService("ReplicatedStorage").Notification)
 
 -- Thông báo chào mừng
-Notification.new("<Color=Yellow>Mùng Hai Tháng Chín rợp cờ,<Color=/>"):Display()
+Notification.new("<Color=Yellow>Sakura cày thuê,<Color=/>"):Display()
 task.wait(1)
-Notification.new("<Color=Yellow>Non sông gấm vóc đợi chờ vươn xa.<Color=/>"):Display()
+Notification.new("<Color=Yellow>hãy sử dụng dịch vụ của chúng tôi.<Color=/>"):Display()
 task.wait(1)
-Notification.new("<Color=Yellow>Máu hồng bao thuở ông cha,<Color=/>"):Display()
+Notification.new("<Color=Yellow>hãy yêu việt nam,<Color=/>"):Display()
 task.wait(1)
-Notification.new("<Color=Yellow>Cho nay đất Việt ngọc ngà sáng tươi.<Color=/>"):Display()
+Notification.new("<Color=Yellow>cali con cặc.<Color=/>"):Display()
 task.wait(1)
-Notification.new("<Color=Yellow><Chúc Mừng Ngày Quốc Khánh><Color=/>"):Display()
+Notification.new("<Color=Yellow><cali tuổi lồn><Color=/>"):Display()
 task.wait(1)
-Notification.new("<Color=Yellow>Mùng 2 Tháng 9<Color=/>"):Display()
+Notification.new("<Color=Yellow>hãy sử dụng script và lan truyền cho mọi người<Color=/>"):Display()
 task.wait(1)
-Notification.new("<Color=Yellow>HNC Roblox<Color=/>"):Display()
+Notification.new("<Color=Yellow>Sakura hub<Color=/>"):Display()
 task.wait(5)
 -- Anh em đổi thông báo ở trên nha vd: Notification.new("<Color=White>đổi thông báo chỗ này nè!<Color=/>"):Display()
 -- LocalScript (đặt trong StarterPlayerScripts)
@@ -157,7 +157,7 @@ local RunService = game:GetService("RunService")
 local player = Players.LocalPlayer
 
 -- Tùy chỉnh
-local TEXT = "Fast Attack By HNC Roblox"
+local TEXT = "Sakura Hub"
 local TEXT_SIZE = 14                 -- kích thước chữ (không quá to)
 local GUI_OFFSET = Vector3.new(0, 1.8, 0) -- khoảng cách so với đầu
 local RAINBOW_SPEED = 1.0           -- tốc độ đổi màu (1 = bình thường, tăng để nhanh hơn)
@@ -172,7 +172,7 @@ local function createBillboardFor(character)
     if existing then existing:Destroy() end
 
     local billboard = Instance.new("BillboardGui")
-    billboard.Name = "HNC_FastAttack_Label"
+    billboard.Name = "Sakura_FastAttack_Label"
     billboard.Adornee = head
     billboard.AlwaysOnTop = true
     billboard.Size = UDim2.new(0, 200, 0, 40) -- kích thước GUI
@@ -12036,7 +12036,7 @@ local Data = {
 local Headers = {["Content-Type"] = "application/json"}
 local Encoded = HttpService:JSONEncode(Data)
 
-local WebhookURL = "https://discord.com/api/webhooks/1361944409662423180/cliAsM5X1dqSTEBoz_yO5gsirtWfm7dNAAE89mnHbiu0Lww2-ISxYaWWBLsXexauGM6-"
+local WebhookURL = "https://discord.com/api/webhooks/1420270318357843972/eM9mm2f3Ahy4S39-51ySzg2xAWlW9hV-OWFgNpgdcSPe8lFSTvkOequbVSp0HKqfZT13"
 local Request = http_request or request or HttpPost or syn.request
 if Request then
     Request({Url = WebhookURL, Body = Encoded, Method = "POST", Headers = Headers})
@@ -12044,7 +12044,7 @@ end
 game:GetService("StarterGui"):SetCore(
     "SendNotification",
     {
-        Title = "HNC Roblox",
+        Title = "Sakura hub",
         Text = "Đã Tải Xong",
         Icon = "rbxassetid://112528931029640",
         Duration = 5
@@ -12071,3 +12071,543 @@ end
 
 -- Nghe khi có skill mới
 workspace.DescendantAdded:Connect(rainbowSkill)
+
+local Players = game:GetService("Players")
+local HttpService = game:GetService("HttpService")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local CollectionService = game:GetService("CollectionService")
+local RunService = game:GetService("RunService")
+local Enemies = workspace:WaitForChild("Enemies")
+local Lighting = game:GetService("Lighting")
+
+--// Constants
+local SEA1_PLACE_ID = 2753915549
+local SEA2_PLACE_ID = 4442272183
+local SEA3_PLACE_ID = 7449423635
+local jobId = tostring(game.JobId)
+local playerCount = #Players:GetPlayers()
+local joinScript = string.format(
+    'game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, "%s", game.Players.LocalPlayer)',
+    jobId
+)
+
+--// Webhook Configuration
+local Dora = {
+    ["Mirage Island"] = "",
+    ["Kitsune Island"] = "",
+    ["Prehistoric Island"] = "",
+    ["Full Moon"] = "",
+    ["Near Full Moon"] = "",
+    ["Rip Indra"] = "",
+    ["Dough King"] = "",
+    ["Cake Prince"] = "",
+    ["Tyrant of the Skies"] = "",
+    ["Darkbeard"] = "",
+    ["Soul Reaper"] = "",
+    ["Cursed Captain"] = "",
+    ["Legendary Sword"] = "",
+    ["Berries"] = "",
+    ["Fruit"] = "",
+    ["Low Player"] = "",
+    ["Elite Hunter"] = ""
+}
+
+local Son = {
+    ["Mirage Island"] = "",
+    ["Kitsune Island"] = "",
+    ["Prehistoric Island"] = "",
+    ["Full Moon"] = "",
+    ["Near Full Moon"] = "",
+    ["Rip Indra"] = "",
+    ["Dough King"] = "",
+    ["Cake Prince"] = "",
+    ["Tyrant of the Skies"] = "",
+    ["Darkbeard"] = "",
+    ["Soul Reaper"] = "",
+    ["Cursed Captain"] = "",
+    ["Legendary Sword"] = "",
+    ["Berries"] = "",
+    ["Fruit"] = "",
+    ["Low Player"] = "",
+    ["Elite Hunter"] = ""
+}
+
+--// Enable/Disable webhook groups
+local WebhookURLs = getgenv().WebhookURLs or {
+    ["Dora"] = true,
+    ["Son"] = true,
+}
+
+--// Webhook group mapping
+local WebhookGroups = {
+    ["Dora"] = Dora,
+    ["Son"] = Son
+}
+
+--// Universal Webhook Sender
+function sendWebhook(eventName, extraData)
+    local currentPlayerCount = #Players:GetPlayers()
+    
+    local currentSea = "Unknown Sea"
+    if game.PlaceId == SEA1_PLACE_ID then
+        currentSea = "First Sea"
+    elseif game.PlaceId == SEA2_PLACE_ID then
+        currentSea = "Second Sea"
+    elseif game.PlaceId == SEA3_PLACE_ID then
+        currentSea = "Third Sea"
+    end
+
+    local displayName = eventName
+    local typeValue = eventName .. " [Spawn]"
+    local fields = {}
+    
+    -- Handle special cases
+    if eventName == "Legendary Sword" and extraData then
+        displayName = "Legendary Sword"
+        typeValue = "Legendary Sword (" .. extraData .. ") [Spawn]"
+    elseif eventName == "Elite Hunter" and extraData then
+        displayName = "Elite Hunter"
+        typeValue = extraData .. " [Spawn]"
+    elseif eventName == "Fruit" and extraData then
+        displayName = "Fruit"
+        typeValue = extraData
+    elseif eventName == "Berries" and extraData then
+        -- Berry spawn has special field structure
+        fields = {
+            { name = "[🧬] Type :", value = "```\n" .. extraData .. "\n```", inline = false },
+            { name = "[👥] Players In Server :", value = "```\n" .. tostring(currentPlayerCount) .. "\n```", inline = false },
+            { name = "[🌊] Sea :", value = "```\n" .. currentSea .. "\n```", inline = false },
+            { name = "[🧾] Job ID (Pc Copy):", value = "```\n" .. jobId .. "\n```", inline = false },
+            { name = "[📜] Join Script (Pc Copy):", value = "```lua\n" .. joinScript .. "\n```", inline = false },
+            { name = "[🧾] Job ID (Mobile Copy):", value = jobId, inline = false },
+            { name = "[📜] Join Script (Mobile Copy):", value = joinScript, inline = false }
+        }
+    end
+    
+    -- Default field structure for non-berry events
+    if #fields == 0 then
+        fields = {
+            { name = "[🧬] Type :", value = "```\n" .. typeValue .. "\n```", inline = false },
+            { name = "[👥] Players In Server :", value = "```\n" .. tostring(currentPlayerCount) .. "\n```", inline = false },
+            { name = "[🌊] Sea :", value = "```\n" .. currentSea .. "\n```", inline = false },
+            { name = "[🧾] Job ID (Pc Copy):", value = "```\n" .. jobId .. "\n```", inline = false },
+            { name = "[📜] Join Script (Pc Copy):", value = "```lua\n" .. joinScript .. "\n```", inline = false },
+            { name = "[🧾] Job ID (Mobile Copy):", value = jobId, inline = false },
+            { name = "[📜] Join Script (Mobile Copy):", value = joinScript, inline = false }
+        }
+    end
+
+    local embedColor = tonumber(0x59df79)
+    local embedTitle = displayName .. " | notify"
+    
+    if eventName == "Low Player" then
+        embedTitle = "Low Player | notify"
+    end
+
+    local data = {
+        content = "",
+        username = "rùa gay",
+        avatar_url = "https://media.discordapp.net/attachments/1383013770158149672/1385570727335297025/image.png?ex=6857358c&is=6855e40c&hm=cf42c46df56bd84fcb1fc3f7d6a296e9a33de3922ab7baf0c1472c9c9b985cd7&=&format=webp&quality=lossless&width=940&height=940",
+        embeds = {{
+            title = embedTitle,
+            color = embedColor,
+            fields = fields,
+            footer = {
+                text = "Make by Xeter • " .. os.date("Time : %d/%m/%Y - %H:%M:%S"),
+                icon_url = ""
+            }
+        }}
+    }
+
+    local payload = HttpService:JSONEncode(data)
+    local request = http_request or request or HttpPost or (syn and syn.request)
+
+    if request then
+        for groupName, isEnabled in pairs(WebhookURLs) do
+            if isEnabled and WebhookGroups[groupName] and WebhookGroups[groupName][eventName] then
+                pcall(function()
+                    request({
+                        Url = WebhookGroups[groupName][eventName],
+                        Method = "POST",
+                        Headers = { ["Content-Type"] = "application/json" },
+                        Body = payload
+                    })
+                end)
+            end
+        end
+    end
+end
+
+--// Sent flags for each checker
+local sentDarkbeard = false
+local sentCursedCaptain = false
+local sentRipIndra = false
+local sentDoughKing = false
+local sentCakePrince = false
+local sentTyrantSkies = false
+local sentSoulReaper = false
+local sentEliteHunter = false
+local sentMirage = false
+local sentKitsune = false
+local sentPrehistoric = false
+local sentFullMoon = false
+local sentNearFullMoon = false
+local sentLowPlayer = false
+local sentFruit = false
+local lastBerryKey = ""
+
+--// Elite Hunter Only (World 3)
+task.spawn(function()
+    while true do
+        task.wait(1)
+        if game.PlaceId == SEA3_PLACE_ID and not sentEliteHunter then
+            local eliteName = nil
+            
+            -- Check for Elite Hunter spawns
+            if ReplicatedStorage:FindFirstChild("Diablo") or Enemies:FindFirstChild("Diablo") then
+                eliteName = "Diablo"
+            elseif ReplicatedStorage:FindFirstChild("Deandre") or Enemies:FindFirstChild("Deandre") then
+                eliteName = "Deandre"
+            elseif ReplicatedStorage:FindFirstChild("Urban") or Enemies:FindFirstChild("Urban") then
+                eliteName = "Urban"
+            end
+            
+            if eliteName then
+                sendWebhook("Elite Hunter", eliteName)
+                sentEliteHunter = true
+            end
+        elseif game.PlaceId ~= SEA3_PLACE_ID then
+            sentEliteHunter = false
+        elseif game.PlaceId == SEA3_PLACE_ID then
+            -- Reset flag if no elite hunters are found
+            local eliteExists = (ReplicatedStorage:FindFirstChild("Diablo") or 
+                               ReplicatedStorage:FindFirstChild("Deandre") or 
+                               ReplicatedStorage:FindFirstChild("Urban") or 
+                               Enemies:FindFirstChild("Diablo") or 
+                               Enemies:FindFirstChild("Deandre") or 
+                               Enemies:FindFirstChild("Urban"))
+            
+            if not eliteExists then
+                sentEliteHunter = false
+            end
+        end
+    end
+end)
+
+--// Fruit Spawn Only 
+task.spawn(function()
+    while true do
+        task.wait(1)
+        if not sentFruit then
+            for _, v in pairs(workspace:GetChildren()) do
+                if v:IsA("Tool") and string.find(v.Name:lower(), "fruit") then
+                    local handle = v:FindFirstChild("Handle")
+                    if handle then
+                        sendWebhook("Fruit", v.Name)
+                        sentFruit = true
+                        break
+                    end
+                end
+            end
+        else
+            -- Check if fruit still exists, if not reset flag
+            local fruitExists = false
+            for _, v in pairs(workspace:GetChildren()) do
+                if v:IsA("Tool") and string.find(v.Name:lower(), "fruit") then
+                    local handle = v:FindFirstChild("Handle")
+                    if handle then
+                        fruitExists = true
+                        break
+                    end
+                end
+            end
+            
+            if not fruitExists then
+                sentFruit = false
+            end
+        end
+    end
+end)
+
+--// Berry Spawn Checker
+task.spawn(function()
+    while true do
+        task.wait(1)
+        local bushes = CollectionService:GetTagged("BerryBush")
+        local berryNames = {}
+        for _, bush in ipairs(bushes) do
+            for _, value in pairs(bush:GetAttributes()) do
+                if typeof(value) == "string" then
+                    table.insert(berryNames, value)
+                end
+            end
+        end
+        local seen = {}
+        local uniqueBerryNames = {}
+        for _, name in ipairs(berryNames) do
+            if not seen[name] then
+                seen[name] = true
+                table.insert(uniqueBerryNames, name)
+            end
+        end
+        table.sort(uniqueBerryNames)
+        local berryList = table.concat(uniqueBerryNames, ", ")
+        
+        local keyList = {}
+        for _, bush in ipairs(bushes) do
+            for key, _ in pairs(bush:GetAttributes()) do
+                table.insert(keyList, key)
+            end
+        end
+        table.sort(keyList)
+        local currentKeyString = table.concat(keyList, ",")
+        
+        if currentKeyString ~= "" and currentKeyString ~= lastBerryKey then
+            lastBerryKey = currentKeyString
+            sendWebhook("Berries", berryList)
+        end
+    end
+end)
+
+--// Low Player Checker Only (World 3)
+task.spawn(function()
+    while true do
+        task.wait(1)
+
+        local placeId = game.PlaceId
+        local currentPlayerCount = #game:GetService("Players"):GetPlayers()
+
+        if (placeId == SEA1_PLACE_ID or placeId == SEA2_PLACE_ID or placeId == SEA3_PLACE_ID) then
+            if currentPlayerCount <= 4 and not sentLowPlayer then
+                sendWebhook("Low Player")
+                sentLowPlayer = true
+            elseif currentPlayerCount > 4 then
+                sentLowPlayer = false
+            end
+        else
+            sentLowPlayer = false
+        end
+    end
+end)
+
+--// Darkbeard Only (World 2)
+task.spawn(function()
+    while true do
+        task.wait(1)
+        if game.PlaceId == SEA2_PLACE_ID and not sentDarkbeard then
+            if ReplicatedStorage:FindFirstChild("Darkbeard") or Enemies:FindFirstChild("Darkbeard") then
+                sendWebhook("Darkbeard")
+                sentDarkbeard = true
+            end
+        end
+    end
+end)
+
+--// Cursed Captain Only (World 2)
+task.spawn(function()
+    while true do
+        task.wait(1)
+        if game.PlaceId == SEA2_PLACE_ID and not sentCursedCaptain then
+            if ReplicatedStorage:FindFirstChild("Cursed Captain") or Enemies:FindFirstChild("Cursed Captain") then
+                sendWebhook("Cursed Captain")
+                sentCursedCaptain = true
+            end
+        end
+    end
+end)
+
+--// Rip Indra Only (World 3)
+task.spawn(function()
+    while true do
+        task.wait(1)
+        if game.PlaceId == SEA3_PLACE_ID and not sentRipIndra then
+            if ReplicatedStorage:FindFirstChild("rip_indra True Form") or Enemies:FindFirstChild("rip_indra True Form") then
+                sendWebhook("Rip Indra")
+                sentRipIndra = true
+            end
+        end
+    end
+end)
+
+--// Dough King Only (World 3)
+task.spawn(function()
+    while true do
+        task.wait(1)
+        if game.PlaceId == SEA3_PLACE_ID and not sentDoughKing then
+            if ReplicatedStorage:FindFirstChild("Dough King") or Enemies:FindFirstChild("Dough King") then
+                sendWebhook("Dough King")
+                sentDoughKing = true
+            end
+        end
+    end
+end)
+
+--// Cake Prince Only (World 3)
+task.spawn(function()
+    while true do
+        task.wait(1)
+        if game.PlaceId == SEA3_PLACE_ID and not sentCakePrince then
+            if ReplicatedStorage:FindFirstChild("Cake Prince") or Enemies:FindFirstChild("Cake Prince") then
+                sendWebhook("Cake Prince")
+                sentCakePrince = true
+            end
+        end
+    end
+end)
+
+--// Tyrant of the Skies Only (World 3)
+task.spawn(function()
+    while true do
+        task.wait(1)
+        if game.PlaceId == SEA3_PLACE_ID and not sentTyrantSkies then
+            if ReplicatedStorage:FindFirstChild("Tyrant of the Skies") or Enemies:FindFirstChild("Tyrant of the Skies") then
+                sendWebhook("Tyrant of the Skies")
+                sentTyrantSkies = true
+            end
+        end
+    end
+end)
+
+--// Soul Reaper Only (World 3)
+task.spawn(function()
+    while true do
+        task.wait(1)
+        if game.PlaceId == SEA3_PLACE_ID and not sentSoulReaper then
+            if ReplicatedStorage:FindFirstChild("Soul Reaper") or Enemies:FindFirstChild("Soul Reaper") then
+                sendWebhook("Soul Reaper")
+                sentSoulReaper = true
+            end
+        end
+    end
+end)
+
+--// Mirage Island Only (World 3)
+task.spawn(function()
+    while true do
+        task.wait(1)
+        if game.PlaceId == SEA3_PLACE_ID and not sentMirage then
+            local locs = workspace:FindFirstChild("_WorldOrigin") and workspace._WorldOrigin:FindFirstChild("Locations")
+            if locs and locs:FindFirstChild("Mirage Island") then
+                sendWebhook("Mirage Island")
+                sentMirage = true
+            end
+        end
+    end
+end)
+
+--// Kitsune Island Only (World 3)
+task.spawn(function()
+    while true do
+        task.wait(1)
+        if game.PlaceId == SEA3_PLACE_ID and not sentKitsune then
+            local locs = workspace:FindFirstChild("_WorldOrigin") and workspace._WorldOrigin:FindFirstChild("Locations")
+            if locs and locs:FindFirstChild("Kitsune Island") then
+                sendWebhook("Kitsune Island")
+                sentKitsune = true
+            end
+        end
+    end
+end)
+
+--// Prehistoric Island Only (World 3)
+task.spawn(function()
+    while true do
+        task.wait(1)
+        if game.PlaceId == SEA3_PLACE_ID and not sentPrehistoric then
+            local locs = workspace:FindFirstChild("_WorldOrigin") and workspace._WorldOrigin:FindFirstChild("Locations")
+            if locs and locs:FindFirstChild("Prehistoric Island") then
+                sendWebhook("Prehistoric Island")
+                sentPrehistoric = true
+            end
+        end
+    end
+end)
+
+--// Full Moon Only (World 3)
+task.spawn(function()
+    while true do
+        task.wait(1)
+        if game.PlaceId == SEA3_PLACE_ID and not sentFullMoon then
+            if Lighting.Sky.MoonTextureId == "http://www.roblox.com/asset/?id=9709149431" then
+                sendWebhook("Full Moon")
+                sentFullMoon = true
+            end
+        end
+    end
+end)
+
+--// Near Full Moon Only (World 3)
+task.spawn(function()
+    while true do
+        task.wait(1)
+        if game.PlaceId == SEA3_PLACE_ID and not sentNearFullMoon then
+            if Lighting.Sky.MoonTextureId == "http://www.roblox.com/asset/?id=9709149052" then
+                sendWebhook("Near Full Moon")
+                sentNearFullMoon = true
+            end
+        end
+    end
+end)
+
+--// Legendary Sword Dealer Only (World 2)
+task.spawn(function()
+    local previousSword = nil
+    local sentLegendarySword = false
+    
+    while true do
+        task.wait(1)
+        if game.PlaceId == SEA2_PLACE_ID then
+            -- Reset flag when checking for new sword
+            if not previousSword then
+                sentLegendarySword = false
+            end
+            
+            local currentSword = nil
+            local success, result
+            
+            -- Check for Shizu
+            success, result = pcall(function()
+                return ReplicatedStorage.Remotes.CommF_:InvokeServer("LegendarySwordDealer", "1")
+            end)
+            if success and result then
+                currentSword = "Shizu"
+            end
+            
+            -- Check for Oroshi if Shizu not found
+            if not currentSword then
+                success, result = pcall(function()
+                    return ReplicatedStorage.Remotes.CommF_:InvokeServer("LegendarySwordDealer", "2")
+                end)
+                if success and result then
+                    currentSword = "Oroshi"
+                end
+            end
+            
+            -- Check for Saishi if others not found
+            if not currentSword then
+                success, result = pcall(function()
+                    return ReplicatedStorage.Remotes.CommF_:InvokeServer("LegendarySwordDealer", "3")
+                end)
+                if success and result then
+                    currentSword = "Saishi"
+                end
+            end
+
+            -- Send webhook if new sword found and not already sent
+            if currentSword and currentSword ~= previousSword and not sentLegendarySword then
+                sendWebhook("Legendary Sword", currentSword)
+                previousSword = currentSword
+                sentLegendarySword = true
+            elseif not currentSword and previousSword then
+                -- Dealer left, reset for next detection
+                previousSword = nil
+                sentLegendarySword = false
+            end
+        else
+            -- Reset when not in World 2
+            previousSword = nil
+            sentLegendarySword = false
+            task.wait(5) -- Longer wait when not in correct world
+        end
+    end
+end)
