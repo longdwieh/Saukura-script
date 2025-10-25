@@ -1,4 +1,4 @@
--- Anya Hub Mini UI (Moveable version)
+-- Anya Hub Mini UI (Full Toggle Version)
 local Players = game:GetService("Players")
 local player = Players.LocalPlayer
 local UserInputService = game:GetService("UserInputService")
@@ -9,7 +9,7 @@ gui.Name = "AnyaHubUI"
 gui.ResetOnSpawn = false
 gui.Parent = player:WaitForChild("PlayerGui")
 
--- Avatar Button (toggle menu)
+-- Avatar Button
 local avatarBtn = Instance.new("ImageButton", gui)
 avatarBtn.Name = "AvatarButton"
 avatarBtn.Size = UDim2.new(0, 60, 0, 60)
@@ -24,7 +24,7 @@ local avatarStroke = Instance.new("UIStroke", avatarBtn)
 avatarStroke.Thickness = 2
 avatarStroke.Color = Color3.fromRGB(0, 150, 255)
 
--- Main Frame (draggable + centered)
+-- Main Frame
 local main = Instance.new("Frame", gui)
 main.Name = "MainFrame"
 main.Size = UDim2.new(0, 580, 0, 340)
@@ -33,13 +33,12 @@ main.BackgroundColor3 = Color3.fromRGB(23, 40, 28)
 main.BorderSizePixel = 0
 Instance.new("UICorner", main).CornerRadius = UDim.new(0, 10)
 
--- Enable dragging
+-- Draggable
 local dragging, dragInput, dragStart, startPos
 local function updateDrag(input)
 	local delta = input.Position - dragStart
 	main.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
 end
-
 main.InputBegan:Connect(function(input)
 	if input.UserInputType == Enum.UserInputType.MouseButton1 then
 		dragging = true
@@ -52,13 +51,11 @@ main.InputBegan:Connect(function(input)
 		end)
 	end
 end)
-
 main.InputChanged:Connect(function(input)
 	if input.UserInputType == Enum.UserInputType.MouseMovement then
 		dragInput = input
 	end
 end)
-
 UserInputService.InputChanged:Connect(function(input)
 	if input == dragInput and dragging then
 		updateDrag(input)
@@ -92,6 +89,18 @@ author.Size = UDim2.new(0, 100, 1, 0)
 author.Position = UDim2.new(1, -110, 0, 0)
 author.TextXAlignment = Enum.TextXAlignment.Right
 
+-- Sidebar
+local sidebar = Instance.new("Frame", main)
+sidebar.Size = UDim2.new(0, 130, 1, -30)
+sidebar.Position = UDim2.new(0, 0, 0, 30)
+sidebar.BackgroundColor3 = Color3.fromRGB(20, 35, 25)
+sidebar.BorderSizePixel = 0
+sidebar.Active = true
+sidebar.ZIndex = 5
+Instance.new("UICorner", sidebar).CornerRadius = UDim.new(0, 6)
+
+local buttons = {"Home", "Farming", "Player", "Misc", "Settings"}
+
 -- Content
 local content = Instance.new("Frame", main)
 content.Size = UDim2.new(1, -160, 1, -60)
@@ -111,7 +120,7 @@ title2.Size = UDim2.new(1, 0, 0, 35)
 title2.TextXAlignment = Enum.TextXAlignment.Left
 title2.ZIndex = 4
 
--- Option generator
+-- Option generator (with toggle)
 local function createOption(y, name, desc)
 	local frame = Instance.new("Frame", content)
 	frame.Size = UDim2.new(1, -20, 0, 50)
@@ -149,12 +158,26 @@ local function createOption(y, name, desc)
 
 	local knob = Instance.new("Frame", toggle)
 	knob.Size = UDim2.new(0, 22, 0, 22)
-	knob.Position = UDim2.new(1, -24, 0.5, -11)
-	knob.BackgroundColor3 = Color3.fromRGB(0, 170, 255)
+	knob.Position = UDim2.new(0, 2, 0.5, -11)
+	knob.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
 	Instance.new("UICorner", knob).CornerRadius = UDim.new(1, 0)
+
+	local isOn = false
+	toggle.InputBegan:Connect(function(input)
+		if input.UserInputType == Enum.UserInputType.MouseButton1 then
+			isOn = not isOn
+			if isOn then
+				knob:TweenPosition(UDim2.new(1, -24, 0.5, -11), "Out", "Sine", 0.2, true)
+				knob.BackgroundColor3 = Color3.fromRGB(0, 170, 255)
+			else
+				knob:TweenPosition(UDim2.new(0, 2, 0.5, -11), "Out", "Sine", 0.2, true)
+				knob.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
+			end
+		end
+	end)
 end
 
--- Category display
+-- Show category content
 local function clearContent()
 	for _, child in ipairs(content:GetChildren()) do
 		if child:IsA("Frame") then
@@ -168,30 +191,20 @@ function showCategory(name)
 	if name == "Home" then
 		createOption(50, "Welcome", "Welcome to Anya Hub")
 	elseif name == "Farming" then
-		createOption(50, "Auto Farm", "Automatically farm enemies nearby")
-		createOption(110, "Fast Attack", "Increase your attack speed")
+		createOption(50, "Auto Farm Level", "Autofarms Quests and Mobs")
+		createOption(110, "Farm Nearest Mob", "Autofarms nearest mobs")
+		createOption(170, "Include Bosses", "Include bosses in routine")
 	elseif name == "Player" then
 		createOption(50, "Speed Boost", "Increase your movement speed")
 		createOption(110, "Jump Boost", "Increase your jump height")
 	elseif name == "Misc" then
 		createOption(50, "Collect Chest", "Automatically collect chests around you")
 	elseif name == "Settings" then
-		createOption(50, "Toggle UI", "Hide or show this menu with the avatar button")
+		createOption(50, "Toggle UI", "Hide or show the menu with avatar button")
 	end
 end
 
--- Sidebar
-local sidebar = Instance.new("Frame", main)
-sidebar.Size = UDim2.new(0, 130, 1, -30)
-sidebar.Position = UDim2.new(0, 0, 0, 30)
-sidebar.BackgroundColor3 = Color3.fromRGB(20, 35, 25)
-sidebar.BorderSizePixel = 0
-sidebar.Active = true
-sidebar.ZIndex = 5
-Instance.new("UICorner", sidebar).CornerRadius = UDim.new(0, 6)
-
-local buttons = {"Home", "Farming", "Player", "Misc", "Settings"}
-
+-- Sidebar buttons
 for i, name in ipairs(buttons) do
 	local btn = Instance.new("TextButton", sidebar)
 	btn.Size = UDim2.new(1, 0, 0, 34)
@@ -213,21 +226,17 @@ for i, name in ipairs(buttons) do
 			end
 		end
 		btn.BackgroundColor3 = Color3.fromRGB(35, 60, 40)
-		if title2 then
-			title2.Text = name
-		end
-		if showCategory then
-			showCategory(name)
-		end
+		title2.Text = name
+		showCategory(name)
 	end)
 end
 
--- Default category
+-- Default
 showCategory("Farming")
 
--- Toggle main UI visibility
+-- Toggle visibility
 local visible = true
 avatarBtn.MouseButton1Click:Connect(function()
 	visible = not visible
 	main.Visible = visible
-end) 
+end)
