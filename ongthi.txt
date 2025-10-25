@@ -1,0 +1,168 @@
+-- FarmingUI_ColorAvatar.lua
+-- Tạo UI với gradient nền + avatar góc phải
+
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+
+-- ScreenGui
+local screenGui = Instance.new("ScreenGui")
+screenGui.Name = "FarmingUI"
+screenGui.ResetOnSpawn = false
+screenGui.Parent = player:WaitForChild("PlayerGui")
+
+-- Hàm tiện ích
+local function makeFrame(parent, props)
+	local f = Instance.new("Frame")
+	for k,v in pairs(props or {}) do
+		if k ~= "Parent" then f[k] = v end
+	end
+	f.Parent = parent
+	local corner = Instance.new("UICorner", f)
+	corner.CornerRadius = UDim.new(0,10)
+	return f
+end
+
+local function makeLabel(parent, props)
+	local l = Instance.new("TextLabel")
+	for k,v in pairs(props or {}) do
+		if k ~= "Parent" then l[k] = v end
+	end
+	l.Parent = parent
+	l.BackgroundTransparency = props.BackgroundTransparency or 1
+	return l
+end
+
+-- Khung chính
+local main = makeFrame(screenGui, {
+	Name = "Main",
+	Size = UDim2.new(0,660,0,420),
+	Position = UDim2.new(0.5,-330,0.12,0),
+	BackgroundColor3 = Color3.fromRGB(20,20,20),
+	BorderSizePixel = 0
+})
+
+-- Gradient nền
+local gradient = Instance.new("UIGradient", main)
+gradient.Color = ColorSequence.new({
+	ColorSequenceKeypoint.new(0, Color3.fromRGB(15, 40, 60)),
+	ColorSequenceKeypoint.new(1, Color3.fromRGB(10, 20, 30))
+})
+gradient.Rotation = 45
+
+-- Thanh tiêu đề trên
+local topBar = Instance.new("Frame", main)
+topBar.Size = UDim2.new(1,0,0,50)
+topBar.BackgroundColor3 = Color3.fromRGB(15,15,15)
+Instance.new("UICorner", topBar).CornerRadius = UDim.new(0,10)
+
+local banner = makeLabel(topBar, {
+	Text = "Forge Hub | Blox Fruits [BETA]",
+	Font = Enum.Font.SourceSansSemibold,
+	TextSize = 18,
+	TextColor3 = Color3.fromRGB(230,230,230),
+	Size = UDim2.new(0.8,0,1,0),
+	Position = UDim2.new(0,12,0,0),
+	TextXAlignment = Enum.TextXAlignment.Left
+})
+
+-- Avatar góc phải
+local avatarImage = Instance.new("ImageLabel", topBar)
+avatarImage.Size = UDim2.new(0,38,0,38)
+avatarImage.Position = UDim2.new(1,-48,0.1,0)
+avatarImage.BackgroundTransparency = 1
+avatarImage.Image = "rbxthumb://type=AvatarHeadShot&id="..player.UserId.."&w=420&h=420"
+Instance.new("UICorner", avatarImage).CornerRadius = UDim.new(1,0)
+
+-- Nội dung
+local content = makeFrame(main, {
+	Size = UDim2.new(1,-24,1,-74),
+	Position = UDim2.new(0,12,0,62),
+	BackgroundColor3 = Color3.fromRGB(12,12,12),
+})
+content.ClipsDescendants = true
+
+-- Tiêu đề
+makeLabel(content, {
+	Text = "Farming",
+	Font = Enum.Font.SourceSansBold,
+	TextSize = 36,
+	TextColor3 = Color3.fromRGB(255,255,255),
+	Size = UDim2.new(1,0,0,52),
+	Position = UDim2.new(0,12,0,6),
+	TextXAlignment = Enum.TextXAlignment.Left
+})
+
+-- Scrolling frame
+local scroll = Instance.new("ScrollingFrame", content)
+scroll.Size = UDim2.new(1,-24,1,-84)
+scroll.Position = UDim2.new(0,12,0,72)
+scroll.BackgroundTransparency = 1
+scroll.ScrollBarThickness = 6
+scroll.CanvasSize = UDim2.new(0,0,0,0)
+
+local uiList = Instance.new("UIListLayout", scroll)
+uiList.Padding = UDim.new(0,12)
+uiList.SortOrder = Enum.SortOrder.LayoutOrder
+
+-- Tạo hàng tùy chọn
+local function createOption(titleText, descText, defaultState)
+	local row = makeFrame(scroll, {
+		Size = UDim2.new(1,0,0,84),
+		BackgroundColor3 = Color3.fromRGB(30,30,30)
+	})
+	local stroke = Instance.new("UIStroke", row)
+	stroke.Color = Color3.fromRGB(80,80,120)
+	stroke.Thickness = 2
+	stroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+
+	makeLabel(row, {
+		Text = titleText,
+		Font = Enum.Font.SourceSansSemibold,
+		TextSize = 20,
+		TextColor3 = Color3.fromRGB(245,245,245),
+		Size = UDim2.new(0.7,0,0,28),
+		Position = UDim2.new(0,12,0,8),
+		TextXAlignment = Enum.TextXAlignment.Left
+	})
+	makeLabel(row, {
+		Text = descText,
+		Font = Enum.Font.SourceSans,
+		TextSize = 14,
+		TextColor3 = Color3.fromRGB(170,170,170),
+		Size = UDim2.new(0.9,0,0,20),
+		Position = UDim2.new(0,12,0,36),
+		TextXAlignment = Enum.TextXAlignment.Left
+	})
+
+	-- Toggle
+	local toggleBg = Instance.new("Frame", row)
+	toggleBg.Size = UDim2.new(0,72,0,36)
+	toggleBg.Position = UDim2.new(1,-92,0,24)
+	toggleBg.BackgroundColor3 = Color3.fromRGB(45,45,45)
+	Instance.new("UICorner", toggleBg).CornerRadius = UDim.new(0,18)
+
+	local knob = Instance.new("TextButton", toggleBg)
+	knob.Size = UDim2.new(0,34,0,32)
+	knob.Position = defaultState and UDim2.new(1,-38,0,2) or UDim2.new(0,4,0,2)
+	knob.AutoButtonColor = false
+	knob.Text = ""
+	knob.BackgroundColor3 = defaultState and Color3.fromRGB(0,170,255) or Color3.fromRGB(200,200,200)
+	Instance.new("UICorner", knob).CornerRadius = UDim.new(0,16)
+
+	local state = defaultState
+	knob.MouseButton1Click:Connect(function()
+		state = not state
+		if state then
+			knob:TweenPosition(UDim2.new(1,-38,0,2),"Out","Quad",0.1,true)
+			knob.BackgroundColor3 = Color3.fromRGB(0,170,255)
+		else
+			knob:TweenPosition(UDim2.new(0,4,0,2),"Out","Quad",0.1,true)
+			knob.BackgroundColor3 = Color3.fromRGB(200,200,200)
+		end
+	end)
+end
+
+createOption("Auto Farm Level","Autofarms Quests and Mobs",true)
+createOption("Farm Nearest Mob","Autofarms nearest mobs",true)
+createOption("Include Bosses","Include bosses in routine",false)
+createOption("Safe Mode","Only perform safe actions",true)
