@@ -1,4 +1,4 @@
--- Anya Hub Mini UI (Full Toggle Version)
+-- Anya Hub Mini UI (Full Fixed Version)
 local Players = game:GetService("Players")
 local player = Players.LocalPlayer
 local UserInputService = game:GetService("UserInputService")
@@ -7,6 +7,7 @@ local UserInputService = game:GetService("UserInputService")
 local gui = Instance.new("ScreenGui")
 gui.Name = "AnyaHubUI"
 gui.ResetOnSpawn = false
+gui.IgnoreGuiInset = true
 gui.Parent = player:WaitForChild("PlayerGui")
 
 -- Avatar Button
@@ -17,12 +18,11 @@ avatarBtn.Position = UDim2.new(0, 20, 0, 20)
 avatarBtn.BackgroundTransparency = 1
 avatarBtn.Image = "rbxthumb://type=AvatarHeadShot&id=" .. player.UserId .. "&w=420&h=420"
 avatarBtn.ScaleType = Enum.ScaleType.Fit
-
-local avatarCorner = Instance.new("UICorner", avatarBtn)
-avatarCorner.CornerRadius = UDim.new(1, 0)
+Instance.new("UICorner", avatarBtn).CornerRadius = UDim.new(1, 0)
 local avatarStroke = Instance.new("UIStroke", avatarBtn)
 avatarStroke.Thickness = 2
 avatarStroke.Color = Color3.fromRGB(0, 150, 255)
+avatarBtn.ZIndex = 50
 
 -- Main Frame
 local main = Instance.new("Frame", gui)
@@ -31,7 +31,9 @@ main.Size = UDim2.new(0, 580, 0, 340)
 main.Position = UDim2.new(0.5, -290, 0.5, -170)
 main.BackgroundColor3 = Color3.fromRGB(23, 40, 28)
 main.BorderSizePixel = 0
+main.Visible = true
 Instance.new("UICorner", main).CornerRadius = UDim.new(0, 10)
+main.ZIndex = 1
 
 -- Draggable
 local dragging, dragInput, dragStart, startPos
@@ -68,6 +70,7 @@ top.Size = UDim2.new(1, 0, 0, 30)
 top.BackgroundColor3 = Color3.fromRGB(18, 30, 22)
 top.BorderSizePixel = 0
 Instance.new("UICorner", top).CornerRadius = UDim.new(0, 10)
+top.ZIndex = 2
 
 local title = Instance.new("TextLabel", top)
 title.Text = "Anya Hub | Blox Fruits [BETA]"
@@ -78,6 +81,7 @@ title.BackgroundTransparency = 1
 title.Position = UDim2.new(0, 12, 0, 0)
 title.Size = UDim2.new(1, -150, 1, 0)
 title.TextXAlignment = Enum.TextXAlignment.Left
+title.ZIndex = 3
 
 local author = Instance.new("TextLabel", top)
 author.Text = "by Sakura"
@@ -88,6 +92,7 @@ author.BackgroundTransparency = 1
 author.Size = UDim2.new(0, 100, 1, 0)
 author.Position = UDim2.new(1, -110, 0, 0)
 author.TextXAlignment = Enum.TextXAlignment.Right
+author.ZIndex = 3
 
 -- Sidebar
 local sidebar = Instance.new("Frame", main)
@@ -95,9 +100,8 @@ sidebar.Size = UDim2.new(0, 130, 1, -30)
 sidebar.Position = UDim2.new(0, 0, 0, 30)
 sidebar.BackgroundColor3 = Color3.fromRGB(20, 35, 25)
 sidebar.BorderSizePixel = 0
-sidebar.Active = true
-sidebar.ZIndex = 5
 Instance.new("UICorner", sidebar).CornerRadius = UDim.new(0, 6)
+sidebar.ZIndex = 3
 
 local buttons = {"Home", "Farming", "Player", "Misc", "Settings"}
 
@@ -118,9 +122,9 @@ title2.BackgroundTransparency = 1
 title2.Position = UDim2.new(0, 0, 0, 0)
 title2.Size = UDim2.new(1, 0, 0, 35)
 title2.TextXAlignment = Enum.TextXAlignment.Left
-title2.ZIndex = 4
+title2.ZIndex = 5
 
--- Option generator (with toggle)
+-- Option generator
 local function createOption(y, name, desc)
 	local frame = Instance.new("Frame", content)
 	frame.Size = UDim2.new(1, -20, 0, 50)
@@ -139,6 +143,7 @@ local function createOption(y, name, desc)
 	title.Size = UDim2.new(0.7, 0, 0, 20)
 	title.Position = UDim2.new(0, 12, 0, 6)
 	title.TextXAlignment = Enum.TextXAlignment.Left
+	title.ZIndex = 5
 
 	local descText = Instance.new("TextLabel", frame)
 	descText.Text = desc
@@ -149,17 +154,20 @@ local function createOption(y, name, desc)
 	descText.Size = UDim2.new(0.9, 0, 0, 16)
 	descText.Position = UDim2.new(0, 12, 0, 26)
 	descText.TextXAlignment = Enum.TextXAlignment.Left
+	descText.ZIndex = 5
 
 	local toggle = Instance.new("Frame", frame)
 	toggle.Size = UDim2.new(0, 50, 0, 26)
 	toggle.Position = UDim2.new(1, -70, 0.5, -13)
 	toggle.BackgroundColor3 = Color3.fromRGB(15, 25, 20)
+	toggle.ZIndex = 5
 	Instance.new("UICorner", toggle).CornerRadius = UDim.new(0, 15)
 
 	local knob = Instance.new("Frame", toggle)
 	knob.Size = UDim2.new(0, 22, 0, 22)
 	knob.Position = UDim2.new(0, 2, 0.5, -11)
 	knob.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
+	knob.ZIndex = 6
 	Instance.new("UICorner", knob).CornerRadius = UDim.new(1, 0)
 
 	local isOn = false
@@ -177,7 +185,7 @@ local function createOption(y, name, desc)
 	end)
 end
 
--- Show category content
+-- Clear & Show categories
 local function clearContent()
 	for _, child in ipairs(content:GetChildren()) do
 		if child:IsA("Frame") then
@@ -191,7 +199,7 @@ function showCategory(name)
 	if name == "Home" then
 		createOption(50, "Welcome", "Welcome to Anya Hub")
 	elseif name == "Farming" then
-		createOption(50, "Auto Farm Level", "Autofarms Quests and Mobs")
+		createOption(50, "Auto Farm Level", "Autofarms quests and mobs")
 		createOption(110, "Farm Nearest Mob", "Autofarms nearest mobs")
 		createOption(170, "Include Bosses", "Include bosses in routine")
 	elseif name == "Player" then
@@ -200,7 +208,7 @@ function showCategory(name)
 	elseif name == "Misc" then
 		createOption(50, "Collect Chest", "Automatically collect chests around you")
 	elseif name == "Settings" then
-		createOption(50, "Toggle UI", "Hide or show the menu with avatar button")
+		createOption(50, "Toggle UI", "Hide or show this menu with avatar button")
 	end
 end
 
@@ -215,7 +223,6 @@ for i, name in ipairs(buttons) do
 	btn.TextSize = 15
 	btn.TextColor3 = Color3.fromRGB(230, 230, 230)
 	btn.AutoButtonColor = false
-	btn.Active = true
 	btn.ZIndex = 6
 	Instance.new("UICorner", btn).CornerRadius = UDim.new(0, 6)
 
@@ -234,7 +241,7 @@ end
 -- Default
 showCategory("Farming")
 
--- Toggle visibility
+-- Toggle UI visibility
 local visible = true
 avatarBtn.MouseButton1Click:Connect(function()
 	visible = not visible
