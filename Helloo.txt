@@ -1,4 +1,4 @@
--- Anya Hub Mini UI (Final Fixed Version)
+-- Anya Hub Mini UI (Drag fixed - 2025)
 local Players = game:GetService("Players")
 local player = Players.LocalPlayer
 local UserInputService = game:GetService("UserInputService")
@@ -11,7 +11,7 @@ gui.IgnoreGuiInset = true
 gui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 gui.Parent = player:WaitForChild("PlayerGui")
 
--- Avatar Button
+-- Avatar button (toggle UI)
 local avatarBtn = Instance.new("ImageButton", gui)
 avatarBtn.Name = "AvatarButton"
 avatarBtn.Size = UDim2.new(0, 60, 0, 60)
@@ -23,9 +23,8 @@ Instance.new("UICorner", avatarBtn).CornerRadius = UDim.new(1, 0)
 local avatarStroke = Instance.new("UIStroke", avatarBtn)
 avatarStroke.Thickness = 2
 avatarStroke.Color = Color3.fromRGB(0, 150, 255)
-avatarBtn.ZIndex = 100
 
--- Main Frame
+-- Main frame
 local main = Instance.new("Frame", gui)
 main.Name = "MainFrame"
 main.Size = UDim2.new(0, 580, 0, 340)
@@ -33,18 +32,26 @@ main.Position = UDim2.new(0.5, -290, 0.5, -170)
 main.BackgroundColor3 = Color3.fromRGB(23, 40, 28)
 main.BorderSizePixel = 0
 main.Active = true
-main.Draggable = false
 Instance.new("UICorner", main).CornerRadius = UDim.new(0, 10)
-main.ZIndex = 10
 
--- Manual drag (fix Roblox drag bug)
-local dragging, dragStart, startPos
+-- 🟩 DRAG chỉ bằng thanh tiêu đề
+local top = Instance.new("Frame", main)
+top.Name = "TopBar"
+top.Size = UDim2.new(1, 0, 0, 30)
+top.BackgroundColor3 = Color3.fromRGB(18, 30, 22)
+top.BorderSizePixel = 0
+Instance.new("UICorner", top).CornerRadius = UDim.new(0, 10)
+top.Active = true
+
+local dragging = false
+local dragStart, startPos
+
 local function updateDrag(input)
 	local delta = input.Position - dragStart
 	main.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
 end
 
-main.InputBegan:Connect(function(input)
+top.InputBegan:Connect(function(input)
 	if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
 		dragging = true
 		dragStart = input.Position
@@ -52,7 +59,7 @@ main.InputBegan:Connect(function(input)
 	end
 end)
 
-main.InputEnded:Connect(function(input)
+top.InputEnded:Connect(function(input)
 	if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
 		dragging = false
 	end
@@ -64,14 +71,7 @@ UserInputService.InputChanged:Connect(function(input)
 	end
 end)
 
--- Top bar
-local top = Instance.new("Frame", main)
-top.Size = UDim2.new(1, 0, 0, 30)
-top.BackgroundColor3 = Color3.fromRGB(18, 30, 22)
-top.BorderSizePixel = 0
-Instance.new("UICorner", top).CornerRadius = UDim.new(0, 10)
-top.ZIndex = 11
-
+-- Title
 local title = Instance.new("TextLabel", top)
 title.Text = "Anya Hub | Blox Fruits [BETA]"
 title.Font = Enum.Font.GothamSemibold
@@ -81,7 +81,6 @@ title.BackgroundTransparency = 1
 title.Position = UDim2.new(0, 12, 0, 0)
 title.Size = UDim2.new(1, -150, 1, 0)
 title.TextXAlignment = Enum.TextXAlignment.Left
-title.ZIndex = 12
 
 local author = Instance.new("TextLabel", top)
 author.Text = "by Sakura"
@@ -92,7 +91,6 @@ author.BackgroundTransparency = 1
 author.Size = UDim2.new(0, 100, 1, 0)
 author.Position = UDim2.new(1, -110, 0, 0)
 author.TextXAlignment = Enum.TextXAlignment.Right
-author.ZIndex = 12
 
 -- Sidebar
 local sidebar = Instance.new("Frame", main)
@@ -101,17 +99,15 @@ sidebar.Position = UDim2.new(0, 0, 0, 30)
 sidebar.BackgroundColor3 = Color3.fromRGB(20, 35, 25)
 sidebar.BorderSizePixel = 0
 sidebar.Active = true
-sidebar.ZIndex = 20
 Instance.new("UICorner", sidebar).CornerRadius = UDim.new(0, 6)
 
 local buttons = {"Home", "Farming", "Player", "Misc", "Settings"}
 
--- Content Frame
+-- Content
 local content = Instance.new("Frame", main)
 content.Size = UDim2.new(1, -160, 1, -60)
 content.Position = UDim2.new(0, 150, 0, 55)
 content.BackgroundTransparency = 1
-content.ZIndex = 30
 
 local title2 = Instance.new("TextLabel", content)
 title2.Text = "Farming"
@@ -122,9 +118,8 @@ title2.BackgroundTransparency = 1
 title2.Position = UDim2.new(0, 0, 0, 0)
 title2.Size = UDim2.new(1, 0, 0, 35)
 title2.TextXAlignment = Enum.TextXAlignment.Left
-title2.ZIndex = 31
 
--- Create toggle option
+-- Option generator (toggle)
 local function createOption(y, name, desc)
 	local frame = Instance.new("Frame", content)
 	frame.Size = UDim2.new(1, -20, 0, 50)
@@ -132,7 +127,6 @@ local function createOption(y, name, desc)
 	frame.BackgroundColor3 = Color3.fromRGB(25, 45, 30)
 	frame.BorderSizePixel = 0
 	frame.Active = true
-	frame.ZIndex = 32
 	Instance.new("UICorner", frame).CornerRadius = UDim.new(0, 8)
 
 	local title = Instance.new("TextLabel", frame)
@@ -143,7 +137,6 @@ local function createOption(y, name, desc)
 	title.BackgroundTransparency = 1
 	title.Size = UDim2.new(0.7, 0, 0, 20)
 	title.Position = UDim2.new(0, 12, 0, 6)
-	title.ZIndex = 33
 
 	local descText = Instance.new("TextLabel", frame)
 	descText.Text = desc
@@ -153,7 +146,6 @@ local function createOption(y, name, desc)
 	descText.BackgroundTransparency = 1
 	descText.Size = UDim2.new(0.9, 0, 0, 16)
 	descText.Position = UDim2.new(0, 12, 0, 26)
-	descText.ZIndex = 33
 
 	local toggle = Instance.new("TextButton", frame)
 	toggle.Size = UDim2.new(0, 50, 0, 26)
@@ -161,15 +153,14 @@ local function createOption(y, name, desc)
 	toggle.BackgroundColor3 = Color3.fromRGB(15, 25, 20)
 	toggle.AutoButtonColor = false
 	toggle.Text = ""
-	toggle.ZIndex = 33
+	toggle.Active = true
 	Instance.new("UICorner", toggle).CornerRadius = UDim.new(0, 15)
 
 	local knob = Instance.new("Frame", toggle)
 	knob.Size = UDim2.new(0, 22, 0, 22)
 	knob.Position = UDim2.new(0, 2, 0.5, -11)
 	knob.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
-	knob.ZIndex = 34
-	Instance.new("UICorner", knob).CornerRadius = UDim.new(1, 0)
+	Instance.new("UICorner", knob).CornerRadius = UDim.New(1, 0)
 
 	local isOn = false
 	toggle.MouseButton1Click:Connect(function()
@@ -184,10 +175,10 @@ local function createOption(y, name, desc)
 	end)
 end
 
--- Show categories
+-- Hiển thị danh mục
 local function clearContent()
-	for _, v in ipairs(content:GetChildren()) do
-		if v:IsA("Frame") then v:Destroy() end
+	for _, child in ipairs(content:GetChildren()) do
+		if child:IsA("Frame") then child:Destroy() end
 	end
 end
 
@@ -220,7 +211,6 @@ for i, name in ipairs(buttons) do
 	btn.TextSize = 15
 	btn.TextColor3 = Color3.fromRGB(230, 230, 230)
 	btn.AutoButtonColor = false
-	btn.ZIndex = 21
 	Instance.new("UICorner", btn).CornerRadius = UDim.new(0, 6)
 
 	btn.MouseButton1Click:Connect(function()
@@ -235,10 +225,10 @@ for i, name in ipairs(buttons) do
 	end)
 end
 
--- Default
+-- Mặc định hiển thị
 showCategory("Farming")
 
--- Toggle main UI
+-- Toggle UI visibility
 local visible = true
 avatarBtn.MouseButton1Click:Connect(function()
 	visible = not visible
