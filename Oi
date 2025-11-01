@@ -26,14 +26,22 @@ Instance.new("UICorner", SideBar).CornerRadius = UDim.new(0, 10)
 local Logo = Instance.new("TextLabel")
 Logo.Parent = SideBar
 Logo.Size = UDim2.new(1, 0, 0, 50)
-Logo.Text = "REDZ HUB"
+Logo.Text = "Neon HUB"
 Logo.Font = Enum.Font.GothamBold
 Logo.TextSize = 20
 Logo.TextColor3 = Color3.fromRGB(255, 0, 100)
 Logo.BackgroundTransparency = 1
 
 -- Danh sách tab
-local Tabs = {"Farm", "Quest", "Stats", "Teleport", "Shop", "Misc"}
+local Tabs = {
+Main = Window:AddTab({Title = "Tab Farming", Icon = "Home"}),
+Settings = Window:AddTab({Title = "Tab Local player", Icon = "setting"}),
+Prehistoric = Window:AddTab({Title = "Tab Prehistoric Event", Icon = "tent"}),
+SeaEvent = Window:AddTab({Title = "Tab Sea Event", Icon = "anchor"}),
+Dragon = Window:AddTab({Title = "Tab Dragon Dojo", Icon = "layers"}),
+Mirage = Window:AddTab({Title = "Tab Race V4", Icon = "flag"}),
+Melee = Window:AddTab({Title = "Tab Get Item", Icon = "loader"}),
+Quests = Window:AddTab({Title = Tab Farming Oder", Icon = "sword"}),
 local Buttons = {}
 
 for i, name in ipairs(Tabs) do
