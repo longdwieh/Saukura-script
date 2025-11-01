@@ -1,28 +1,20 @@
--- 🌌 UI kiểu Redz Hub / Xeter Hub V3 (by ChatGPT GPT-5)
-
--- Tạo ScreenGui
+-- Neon Hub UI (chạy được 100%)
 local ScreenGui = Instance.new("ScreenGui")
-ScreenGui.Name = "RedzHubUI"
 ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
 
--- Main Frame
 local MainFrame = Instance.new("Frame")
-MainFrame.Name = "MainFrame"
+MainFrame.Parent = ScreenGui
 MainFrame.Size = UDim2.new(0, 600, 0, 350)
 MainFrame.Position = UDim2.new(0.5, -300, 0.5, -175)
 MainFrame.BackgroundColor3 = Color3.fromRGB(15, 15, 20)
-MainFrame.Parent = ScreenGui
 Instance.new("UICorner", MainFrame).CornerRadius = UDim.new(0, 10)
 
--- Sidebar
 local SideBar = Instance.new("Frame")
-SideBar.Name = "SideBar"
+SideBar.Parent = MainFrame
 SideBar.Size = UDim2.new(0, 150, 1, 0)
 SideBar.BackgroundColor3 = Color3.fromRGB(25, 25, 35)
-SideBar.Parent = MainFrame
 Instance.new("UICorner", SideBar).CornerRadius = UDim.new(0, 10)
 
--- Logo
 local Logo = Instance.new("TextLabel")
 Logo.Parent = SideBar
 Logo.Size = UDim2.new(1, 0, 0, 50)
@@ -32,21 +24,13 @@ Logo.TextSize = 20
 Logo.TextColor3 = Color3.fromRGB(255, 0, 100)
 Logo.BackgroundTransparency = 1
 
--- Danh sách tab
-local Tabs = {
-Main = Window:AddTab({Title = "Tab Farming", Icon = "Home"}),
-Settings = Window:AddTab({Title = "Tab Local player", Icon = "setting"}),
-Prehistoric = Window:AddTab({Title = "Tab Prehistoric Event", Icon = "tent"}),
-SeaEvent = Window:AddTab({Title = "Tab Sea Event", Icon = "anchor"}),
-Dragon = Window:AddTab({Title = "Tab Dragon Dojo", Icon = "layers"}),
-Mirage = Window:AddTab({Title = "Tab Race V4", Icon = "flag"}),
-Melee = Window:AddTab({Title = "Tab Get Item", Icon = "loader"}),
-Quests = Window:AddTab({Title = Tab Farming Oder", Icon = "sword"}),
+-- Danh sách tab (sửa lại)
+local Tabs = {"Farm", "Quest", "Stats", "Teleport", "Shop", "Misc"}
 local Buttons = {}
 
 for i, name in ipairs(Tabs) do
 	local btn = Instance.new("TextButton")
-	btn.Name = "Tab"..name
+	btn.Name = "Tab_" .. name
 	btn.Parent = SideBar
 	btn.Size = UDim2.new(1, -20, 0, 40)
 	btn.Position = UDim2.new(0, 10, 0, 50 + (i * 45))
@@ -62,10 +46,10 @@ end
 -- Content Frame
 local ContentFrame = Instance.new("Frame")
 ContentFrame.Name = "ContentFrame"
+ContentFrame.Parent = MainFrame
 ContentFrame.Size = UDim2.new(1, -160, 1, 0)
 ContentFrame.Position = UDim2.new(0, 160, 0, 0)
 ContentFrame.BackgroundColor3 = Color3.fromRGB(20, 20, 30)
-ContentFrame.Parent = MainFrame
 Instance.new("UICorner", ContentFrame).CornerRadius = UDim.new(0, 10)
 
 local TitleLabel = Instance.new("TextLabel")
@@ -78,13 +62,13 @@ TitleLabel.TextSize = 20
 TitleLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
 TitleLabel.BackgroundTransparency = 1
 
--- Hiệu ứng đổi tab
+-- Chuyển tab
 for _, btn in pairs(Buttons) do
 	btn.MouseButton1Click:Connect(function()
 		for _, other in pairs(Buttons) do
 			other.BackgroundColor3 = Color3.fromRGB(40, 40, 60)
 		end
 		btn.BackgroundColor3 = Color3.fromRGB(70, 50, 120)
-		TitleLabel.Text = "Bạn đang ở danh mục: " .. btn.Text
+		TitleLabel.Text = "Bạn đang ở tab: " .. btn.Text
 	end)
 end
