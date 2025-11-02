@@ -49,6 +49,7 @@ TitleLabel.Font = Enum.Font.GothamBold
 TitleLabel.TextSize = 20
 TitleLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
 TitleLabel.BackgroundTransparency = 1
+
 -- Avatar tùy chỉnh (dùng ID ảnh Roblox)
 local AvatarImage = Instance.new("ImageLabel", SideBar)
 AvatarImage.Size = UDim2.new(0, 80, 0, 80)
