@@ -60,7 +60,7 @@ AvatarImage.BackgroundTransparency = 0
 Instance.new("UICorner", AvatarImage).CornerRadius = UDim.new(1, 0)
 
 -- ⚙️ Gắn ID ảnh Roblox (thay 1234567890 bằng ID ảnh của bạn)
-local avatarID = 1234567890
+local avatarID = 111367887827717
 AvatarImage.Image = "rbxassetid://" .. avatarID
 
 -- Tên người chơi dưới avatar
