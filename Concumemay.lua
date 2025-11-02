@@ -49,6 +49,30 @@ TitleLabel.Font = Enum.Font.GothamBold
 TitleLabel.TextSize = 20
 TitleLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
 TitleLabel.BackgroundTransparency = 1
+-- Avatar tùy chỉnh (dùng ID ảnh Roblox)
+local AvatarImage = Instance.new("ImageLabel", SideBar)
+AvatarImage.Size = UDim2.new(0, 80, 0, 80)
+AvatarImage.Position = UDim2.new(0.5, -40, 0, 260) -- chỉnh vị trí nếu muốn
+AvatarImage.BackgroundColor3 = Color3.fromRGB(30, 30, 40)
+AvatarImage.BorderSizePixel = 0
+AvatarImage.BackgroundTransparency = 0
+Instance.new("UICorner", AvatarImage).CornerRadius = UDim.new(1, 0)
+
+-- ⚙️ Gắn ID ảnh Roblox (thay 1234567890 bằng ID ảnh của bạn)
+local avatarID = 1234567890
+AvatarImage.Image = "rbxassetid://" .. avatarID
+
+-- Tên người chơi dưới avatar
+local Player = game.Players.LocalPlayer
+local PlayerName = Instance.new("TextLabel", SideBar)
+PlayerName.Size = UDim2.new(1, 0, 0, 20)
+PlayerName.Position = UDim2.new(0, 0, 0, 345)
+PlayerName.Text = Player.Name
+PlayerName.Font = Enum.Font.GothamBold
+PlayerName.TextSize = 16
+PlayerName.TextColor3 = Color3.fromRGB(255, 255, 255)
+PlayerName.BackgroundTransparency = 1
+PlayerName.TextYAlignment = Enum.TextYAlignment.Center
 
 -- Hàm tạo nút chức năng
 local function createButton(parent, text, callback)
