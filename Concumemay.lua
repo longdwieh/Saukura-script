@@ -1,31 +1,65 @@
--- Neon Hub UI (chạy ổn trên Delta)
-local ScreenGui = Instance.new("ScreenGui", game.Players.LocalPlayer:WaitForChild("PlayerGui"))
+--// NEON HUB UI v2 (tương thích Delta, Arceus X)
+local Player = game.Players.LocalPlayer
+local TweenService = game:GetService("TweenService")
+
+--// Giao diện chính
+local ScreenGui = Instance.new("ScreenGui", Player:WaitForChild("PlayerGui"))
+ScreenGui.ResetOnSpawn = false
+
 local MainFrame = Instance.new("Frame", ScreenGui)
 MainFrame.Size = UDim2.new(0, 600, 0, 350)
 MainFrame.Position = UDim2.new(0.5, -300, 0.5, -175)
 MainFrame.BackgroundColor3 = Color3.fromRGB(15, 15, 20)
 Instance.new("UICorner", MainFrame).CornerRadius = UDim.new(0, 10)
+MainFrame.Active = true
+MainFrame.Draggable = true
 
+--// Thanh bên trái
 local SideBar = Instance.new("Frame", MainFrame)
 SideBar.Size = UDim2.new(0, 150, 1, 0)
 SideBar.BackgroundColor3 = Color3.fromRGB(25, 25, 35)
 Instance.new("UICorner", SideBar).CornerRadius = UDim.new(0, 10)
 
 local Logo = Instance.new("TextLabel", SideBar)
-Logo.Size = UDim2.new(1, 0, 0, 50)
+Logo.Size = UDim2.new(1, 0, 0, 40)
+Logo.Position = UDim2.new(0, 0, 0, 10)
 Logo.Text = "Neon HUB"
 Logo.Font = Enum.Font.GothamBold
 Logo.TextSize = 20
 Logo.TextColor3 = Color3.fromRGB(255, 0, 100)
 Logo.BackgroundTransparency = 1
 
-local Tabs = {"Farm", "Quest", "Stats", "Teleport", "Shop", "Misc"}
+--// Avatar
+local AvatarImage = Instance.new("ImageButton", SideBar)
+AvatarImage.Size = UDim2.new(0, 80, 0, 80)
+AvatarImage.Position = UDim2.new(0.5, -40, 0, 60)
+AvatarImage.BackgroundColor3 = Color3.fromRGB(30, 30, 40)
+AvatarImage.BorderSizePixel = 0
+Instance.new("UICorner", AvatarImage).CornerRadius = UDim.new(1, 0)
+
+-- Đổi ID ảnh Roblox ở đây (ví dụ ảnh đại diện bạn tải lên Roblox)
+local avatarID = 111367887827717  -- thay ID bằng ảnh Roblox của bạn
+AvatarImage.Image = "rbxassetid://" .. avatarID
+
+-- Tên người chơi
+local PlayerName = Instance.new("TextLabel", SideBar)
+PlayerName.Size = UDim2.new(1, 0, 0, 20)
+PlayerName.Position = UDim2.new(0, 0, 0, 145)
+PlayerName.Text = Player.Name
+PlayerName.Font = Enum.Font.GothamBold
+PlayerName.TextSize = 16
+PlayerName.TextColor3 = Color3.fromRGB(255, 255, 255)
+PlayerName.BackgroundTransparency = 1
+PlayerName.TextYAlignment = Enum.TextYAlignment.Center
+
+--// Danh sách Tab
+local Tabs = {"info", "Farm", "Quest", "Stats", "Teleport", "Shop", "Misc"}
 local Buttons = {}
 
 for i, name in ipairs(Tabs) do
 	local btn = Instance.new("TextButton", SideBar)
 	btn.Size = UDim2.new(1, -20, 0, 40)
-	btn.Position = UDim2.new(0, 10, 0, 50 + (i * 45))
+	btn.Position = UDim2.new(0, 10, 0, 180 + (i * 45))
 	btn.BackgroundColor3 = Color3.fromRGB(40, 40, 60)
 	btn.TextColor3 = Color3.fromRGB(255, 255, 255)
 	btn.Font = Enum.Font.GothamBold
@@ -35,6 +69,7 @@ for i, name in ipairs(Tabs) do
 	table.insert(Buttons, btn)
 end
 
+--// Khung nội dung
 local ContentFrame = Instance.new("Frame", MainFrame)
 ContentFrame.Size = UDim2.new(1, -160, 1, 0)
 ContentFrame.Position = UDim2.new(0, 160, 0, 0)
@@ -50,35 +85,11 @@ TitleLabel.TextSize = 20
 TitleLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
 TitleLabel.BackgroundTransparency = 1
 
--- Avatar tùy chỉnh (dùng ID ảnh Roblox)
-local AvatarImage = Instance.new("ImageLabel", SideBar)
-AvatarImage.Size = UDim2.new(0, 80, 0, 80)
-AvatarImage.Position = UDim2.new(0.5, -40, 0, 260) -- chỉnh vị trí nếu muốn
-AvatarImage.BackgroundColor3 = Color3.fromRGB(30, 30, 40)
-AvatarImage.BorderSizePixel = 0
-AvatarImage.BackgroundTransparency = 0
-Instance.new("UICorner", AvatarImage).CornerRadius = UDim.new(1, 0)
-
--- ⚙️ Gắn ID ảnh Roblox (thay 1234567890 bằng ID ảnh của bạn)
-local avatarID = 111367887827717
-AvatarImage.Image = "rbxassetid://" .. avatarID
-
--- Tên người chơi dưới avatar
-local Player = game.Players.LocalPlayer
-local PlayerName = Instance.new("TextLabel", SideBar)
-PlayerName.Size = UDim2.new(1, 0, 0, 20)
-PlayerName.Position = UDim2.new(0, 0, 0, 345)
-PlayerName.Text = Player.Name
-PlayerName.Font = Enum.Font.GothamBold
-PlayerName.TextSize = 16
-PlayerName.TextColor3 = Color3.fromRGB(255, 255, 255)
-PlayerName.BackgroundTransparency = 1
-PlayerName.TextYAlignment = Enum.TextYAlignment.Center
-
--- Hàm tạo nút chức năng
+--// Hàm tạo nút trong Content
 local function createButton(parent, text, callback)
 	local b = Instance.new("TextButton", parent)
 	b.Size = UDim2.new(0, 200, 0, 35)
+	b.Position = UDim2.new(0, 20, 0, 70)
 	b.BackgroundColor3 = Color3.fromRGB(40, 40, 60)
 	b.TextColor3 = Color3.fromRGB(255, 255, 255)
 	b.Font = Enum.Font.Gotham
@@ -89,82 +100,31 @@ local function createButton(parent, text, callback)
 	return b
 end
 
--- Chức năng tab
+--// Hàm xử lý mỗi tab
 local tabFunctions = {
 	Farm = function(frame)
-		local autoFarm = createButton(frame, "Auto Farm Level: OFF", function(btn)
+		local btn = createButton(frame, "Auto Farm Level: OFF", function(self)
 			_G.AutoFarm = not _G.AutoFarm
-			btn.Text = "Auto Farm Level: " .. (_G.AutoFarm and "ON" or "OFF")
+			self.Text = "Auto Farm Level: " .. (_G.AutoFarm and "ON" or "OFF")
 			while _G.AutoFarm do
 				task.wait(1)
 				print("Đang farm level...")
-				-- Thêm code farm thật ở đây (TP tới quái, đánh, v.v.)
 			end
 		end)
-		autoFarm.Position = UDim2.new(0, 20, 0, 70)
 	end,
-
 	Quest = function(frame)
-		local quest = createButton(frame, "Auto Quest: OFF", function(btn)
+		local btn = createButton(frame, "Auto Quest: OFF", function(self)
 			_G.AutoQuest = not _G.AutoQuest
-			btn.Text = "Auto Quest: " .. (_G.AutoQuest and "ON" or "OFF")
+			self.Text = "Auto Quest: " .. (_G.AutoQuest and "ON" or "OFF")
 			while _G.AutoQuest do
 				task.wait(1)
 				print("Đang làm nhiệm vụ...")
 			end
 		end)
-		quest.Position = UDim2.new(0, 20, 0, 70)
 	end,
-
-	Stats = function(frame)
-		local stats = createButton(frame, "Auto Stats: OFF", function(btn)
-			_G.AutoStats = not _G.AutoStats
-			btn.Text = "Auto Stats: " .. (_G.AutoStats and "ON" or "OFF")
-			while _G.AutoStats do
-				task.wait(2)
-				print("Phân bổ điểm chỉ số...")
-			end
-		end)
-		stats.Position = UDim2.new(0, 20, 0, 70)
-	end,
-
-	Teleport = function(frame)
-		local tp = createButton(frame, "Teleport to Start Island", function()
-			game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(0, 20, 0)
-		end)
-		tp.Position = UDim2.new(0, 20, 0, 70)
-	end,
-
-	Shop = function(frame)
-		local shop = createButton(frame, "Mở Shop", function()
-			print("Mở cửa hàng (chưa làm thật).")
-		end)
-		shop.Position = UDim2.new(0, 20, 0, 70)
-	end,
-
-	Misc = function(frame)
-		local fps = createButton(frame, "FPS Boost", function()
-			print("Đang giảm đồ họa để tăng FPS...")
-			for _, v in pairs(workspace:GetDescendants()) do
-				if v:IsA("BasePart") then v.Material = Enum.Material.SmoothPlastic end
-			end
-		end)
-		fps.Position = UDim2.new(0, 20, 0, 70)
-
-		local autoclick = createButton(frame, "Auto Click: OFF", function(btn)
-			_G.AutoClick = not _G.AutoClick
-			btn.Text = "Auto Click: " .. (_G.AutoClick and "ON" or "OFF")
-			while _G.AutoClick do
-				task.wait(0.3)
-				game:GetService("VirtualUser"):Button1Down(Vector2.new(0,0))
-				game:GetService("VirtualUser"):Button1Up(Vector2.new(0,0))
-			end
-		end)
-		autoclick.Position = UDim2.new(0, 20, 0, 120)
-	end
 }
 
--- Chuyển tab
+--// Chuyển tab
 for _, btn in pairs(Buttons) do
 	btn.MouseButton1Click:Connect(function()
 		for _, other in pairs(Buttons) do
@@ -182,3 +142,14 @@ for _, btn in pairs(Buttons) do
 		end
 	end)
 end
+
+--// Ẩn / Hiện UI khi bấm avatar (có hiệu ứng mượt)
+local uiVisible = true
+AvatarImage.MouseButton1Click:Connect(function()
+	uiVisible = not uiVisible
+	local goal = {BackgroundTransparency = uiVisible and 0 or 1}
+	local tween = TweenService:Create(MainFrame, TweenInfo.new(0.3, Enum.EasingStyle.Sine, Enum.EasingDirection.Out), goal)
+	tween:Play()
+	task.wait(0.3)
+	MainFrame.Visible = uiVisible
+end)
